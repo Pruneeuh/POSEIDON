@@ -1,7 +1,7 @@
-import numpy as np
 import torch
 from numpy import ndarray
 from torch import Tensor
+from poseidon.numpy.utils.camera import generate_camera_parameters, generate_position_matrix, generate_rotation_matrix 
 
 
 def convert_matrix_numpy_to_batch(X_numpy: ndarray) -> Tensor:
@@ -133,3 +133,4 @@ def projection_all_point3D_to2D(
         pi: Tensor = projection_one_point3D_to2D(Pi, C, R, A)
         points2D[:, i, :] = pi.squeeze(-1)
     return points2D  # Return the projected points in 2D (batch_size,4,2)
+
