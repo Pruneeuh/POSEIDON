@@ -1,7 +1,6 @@
 import torch
 from numpy import ndarray
 from torch import Tensor
-from poseidon.numpy.utils.camera import generate_camera_parameters, generate_position_matrix, generate_rotation_matrix 
 
 
 def convert_matrix_numpy_to_batch(X_numpy: ndarray) -> Tensor:
