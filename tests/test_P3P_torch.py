@@ -1,7 +1,7 @@
 import pytest
 from poseidon.numpy.p3p.p3p import find_best_solution_P3P
-from poseidon.numpy.utils.initialize_camera_parameters import *
 from poseidon.numpy.utils.before_p3p import *
+from poseidon.numpy.utils.initialize_camera_parameters import *
 from poseidon.torch.p3p.p3p import P3P, solve_reformat_p3p_solutions
 from poseidon.torch.utils.before_p3p import (
     compute_features_vectors,
@@ -15,7 +15,7 @@ nb_tests = 10
 @pytest.mark.parametrize("_", range(nb_tests))
 def test_P3P_estimation_points(_):
     """
-    Test the P3P algorithm using random parameters by evaluating the projection
+    Test the P3P algorithm in torch using random parameters by evaluating the projection
     error between the original 2D image points and the 2D points projected from
     3D points using the estimated camera parameters.
     """
@@ -42,9 +42,11 @@ def test_P3P_estimation_points(_):
         0
     )  # Compute P3P solutions (batch_size, 4, 3, 4)
     solutions_P3P_np = solutions_P3P.detach().numpy()  # Convert to numpy array (4*3*4)
+
+    # Find the best solution from P3P estimation
     R_opti_torch, C_opti_torch, error = find_best_solution_P3P(
         points_2D_np, points_3D_np, solutions_P3P_np, A_np
-    )  # Find the best solution from P3P estimation
+    )
 
     assert error < precision, "Error in P3P estimation of the 2D point is too high"
 
@@ -52,9 +54,9 @@ def test_P3P_estimation_points(_):
 @pytest.mark.parametrize("_", range(nb_tests))
 def test_P3P_rotation_position(_):
     """
-    Test the P3P algorithm using random parameters by evaluating the error between
-    the ground truth and the estimated camera pose (position and rotation) obtained
-    from the P3P solution.
+    Test the P3P algorithm in torch using random parameters by evaluating the error
+    between the ground truth and the estimated camera pose (position and rotation)
+    obtained from the P3P solution.
     """
     # Generate random camera parameters
     C_np = generate_position_matrix()
@@ -79,10 +81,11 @@ def test_P3P_rotation_position(_):
         0
     )  # Compute P3P solutions (batch_size, 4, 3, 4)
     solutions_P3P_np = solutions_P3P.detach().numpy()  # Convert to numpy array (4*3*4)
+
+    # Find the best solution from P3P estimation
     R_opti_torch, C_opti_torch, error = find_best_solution_P3P(
         points_2D_np, points_3D_np, solutions_P3P_np, A_np
-    )  # Find the best solution from P3P estimation
-
+    )
     assert np.allclose(
         R_opti_torch, R_np, atol=precision
     ), "Estimated rotation does not match the original rotation"
