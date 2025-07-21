@@ -4,14 +4,14 @@
 ```
 📂 poseidon/                    # Main source director
 ├── 📁 numpy/                   # Numpy-related implementations
-│   ├── 📁 p3p/            
-│   │   ├── 📄 p3p.py           
+│   ├── 📁 p3p/
+│   │   ├── 📄 p3p.py
 │   ├── 📁 utils/
 │   │   ├── 📄 camera.py
 │   │   ├── 📄 points.py
 ├── 📁 torch/                   # Torch-related implementations
-│   ├── 📁 p3p/            
-│   │   ├── 📄 p3p.py           
+│   ├── 📁 p3p/
+│   │   ├── 📄 p3p.py
 │   ├── 📁 utils/
 │   │   ├── 📄 before_p3p.py
 │   │   ├── 📄 camera.py
