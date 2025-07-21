@@ -1,11 +1,16 @@
-import pytest 
-from poseidon.torch.utils.intialize_camera_parameters import *
-from poseidon.torch.utils.before_p3p import generate_points_3D, compute_features_vectors, projection_all_point3D_to2D
+import pytest
 from poseidon.torch.p3p.p3p import P3P, find_best_solution_P3P_batch
+from poseidon.torch.utils.before_p3p import (
+    compute_features_vectors,
+    generate_points_3D,
+    projection_all_point3D_to2D,
+)
+from poseidon.torch.utils.intialize_camera_parameters import *
 
 precision = 1e-6
 nb_tests = 10
-batch_size = 5 
+batch_size = 5
+
 
 @pytest.mark.parametrize("_", range(nb_tests))
 def test_P3P_estimation_points(_):
@@ -32,5 +37,4 @@ def test_P3P_estimation_points(_):
     solutions_P3P = P3P(points_3D[:3], features_vectors)
 
     # Find the best solution from P3P estimation
-    R_opti, C_opti, error = find_best_solution_P3P_batch(solutions_P3P,points_3D,points_2D)
-
+    R_opti, C_opti, error = find_best_solution_P3P_batch(solutions_P3P, points_3D, points_2D)
