@@ -12,6 +12,16 @@ def convert_matrix_numpy_to_batch(X_numpy: ndarray) -> Tensor:
     """
     return torch.tensor(X_numpy, dtype=torch.float64).unsqueeze(0)  # Convert to torch tensor
 
+def generate_points_3D(batch_size) -> Tensor:
+    """
+    Generate random 3D points in a space 4*4*4
+    Args:
+        batch_size (int): Number of points to generate.
+    Returns:
+        points_3D (torch.Tensor): Random 3D points of shape (batch_size, 4, 3).
+    """
+    return torch.rand(batch_size, 3, 4) * 4 - 2
+
 
 def compute_features_vectors(points_3D: Tensor, C: Tensor, R: Tensor) -> Tensor:
     """
