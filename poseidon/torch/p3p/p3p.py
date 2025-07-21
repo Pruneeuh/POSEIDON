@@ -1,6 +1,6 @@
 import torch
-from torch import Tensor
 from poseidon.torch.utils.before_p3p import projection_all_point3D_to2D
+from torch import Tensor
 
 
 def P3P(points_3D: Tensor, features_vectors: Tensor) -> Tensor:
