@@ -72,7 +72,7 @@ disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = [
-    "torch.*", 
+    "torch.*",
     "numpy.*"
 ]
 ignore_missing_imports = true
