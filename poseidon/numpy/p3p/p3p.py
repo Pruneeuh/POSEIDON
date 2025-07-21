@@ -3,6 +3,7 @@ from typing import Sequence
 import cv2
 import numpy as np
 from numpy import ndarray
+from poseidon.numpy.utils.points import projection_points_2D
 
 
 def solve_reformat_p3p_solutions(points_3D: ndarray, points_2D: ndarray, A: ndarray) -> ndarray:
@@ -208,3 +209,127 @@ def P3P(points_3D: ndarray, features_vectors: ndarray) -> ndarray:
         solutions[i, :, 1:] = np.transpose(R_estimate)
 
         return solutions
+
+
+def print_best_solution_P3P(
+    points_2D: ndarray, points_3D: ndarray, solutions: ndarray, A: ndarray
+) -> tuple[ndarray, ndarray]:
+    """Find the best solution from P3P estimation based on the smallest error.
+    Args:
+        points_2D (np.ndarray): Projected 2D points of shape (4, 2).
+        points_3D (np.ndarray): 3D points of shape (4, 3).
+        solutions (np.ndarray): Solutions from P3P of shape (4, 3, 4).
+    Returns:
+        R_opti (np.ndarray): Optimal rotation matrix of shape (3, 3).
+        C_opti (np.ndarray): Optimal position vector of shape (3, 1).
+    """
+    erreurs: list = []
+    nb_sol: int = 0
+
+    for i in range(len(solutions)):
+        R: ndarray = solutions[i, :, 1:]  # Rotation matrix (3*3)
+        C: ndarray = solutions[i, :, :1]  # Position matrix (3*1)
+
+        # if not np.all(R==np.zeros((3,3))) and not np.any(np.isnan(R)) :  # Check if R is not a zero matrix and does not contain NaN values
+        nb_sol += 1
+        print("------------ Solution n° : ", nb_sol, "----------------")
+        erreurs.append([0.0])
+        if not np.isnan(R[0, 0]) and not np.all(
+            R == np.zeros((3, 3))
+        ):  # Check if R is not a zero matrix and does not contain NaN values
+            print(
+                "R = \n",
+                R,
+            )
+            print(
+                "C = \n",
+                C,
+            )
+            points_2D_P3P: ndarray = projection_points_2D(
+                points_3D, C, R, A
+            )  # Project the 3D points to 2D using the P3P solution
+            for j in range(len(points_2D)):
+                erreur_pt: float = np.linalg.norm(
+                    points_2D_P3P[j, :] - points_2D[j, :]
+                )  # conversion in float for mypy
+                print("erreur P", j + 1, " = ", type(erreur_pt))
+                erreurs[i] += erreur_pt
+
+        else:
+            print("matrix R is a zero matrix or contains NaN values, skipping this solution.")
+            erreurs[i] = float("inf")  # Handle NaN values
+            print("erreur P3P = inf")
+
+    # Find the best solution (with the smallest estimation error)
+    indice_min: int = 0
+    min: float = erreurs[0]
+    for i in range(1, len(erreurs)):
+        if erreurs[i] < min:
+            min = erreurs[i]
+            indice_min = i
+
+    R_opti: ndarray = solutions[indice_min, :, 1:]
+    C_opti: ndarray = solutions[indice_min, :, :1]
+
+    print("\n------------ Best solution : ----------------")
+    print("Solution n° :", indice_min + 1, "\n")
+    print("R estimé = \n", R_opti, "\n")
+    print("C estimé = \n", C_opti, "\n")
+    print("Erreur totale = ", min, "\n")
+
+    return R_opti, C_opti
+
+
+def find_best_solution_P3P(
+    points_2D: ndarray, points_3D: ndarray, solutions: ndarray, A: ndarray
+) -> tuple[ndarray, ndarray, float]:
+    """Find the best solution from P3P estimation based on the smallest error.
+    Args:
+        points_2D (np.ndarray): Projected 2D points of shape (4, 2).
+        points_3D (np.ndarray): 3D points of shape (4, 3).
+        solutions (np.ndarray): Solutions from P3P of shape (4, 3, 4).
+    Returns:
+        R_opti (np.ndarray): Optimal rotation matrix of shape (3, 3).
+        C_opti (np.ndarray): Optimal position vector of shape (3, 1).
+        error (float): Error of the best solution.
+    """
+    erreurs: list = []
+    nb_sol: int = 0
+
+    for i in range(len(solutions)):
+        R: ndarray = solutions[i, :, 1:]  # Rotation matrix (3*3)
+        C: ndarray = solutions[i, :, :1]  # Position matrix (3*1)
+
+        # if not np.all(R==np.zeros((3,3))) and not np.any(np.isnan(R)) :  # Check if R is not a zero matrix and does not contain NaN values
+        nb_sol += 1
+
+        erreurs.append([0.0])
+        if not np.isnan(R[0, 0]) and not np.all(
+            R == np.zeros((3, 3))
+        ):  # Check if R is not a zero matrix and does not contain NaN values
+            points_2D_P3P: ndarray = projection_points_2D(
+                points_3D, C, R, A
+            )  # Project the 3D points to 2D using the P3P solution
+            for j in range(len(points_2D)):
+                erreur_pt: float = np.linalg.norm(points_2D_P3P[j, :] - points_2D[j, :])
+                erreurs[i] += erreur_pt
+
+        else:
+            erreurs[i] = float("inf")  # Handle NaN values
+
+    # Find the best solution (with the smallest estimation error)
+    indice_min: int = 0
+    min: float = erreurs[0]
+    for i in range(1, len(erreurs)):
+        if erreurs[i] < min:
+            min = erreurs[i]
+            indice_min = i
+
+    R_opti: ndarray = np.transpose(solutions[indice_min, :, 1:])
+    C_opti: ndarray = solutions[indice_min, :, :1]
+
+    return (
+        R_opti,
+        C_opti,
+        min,
+    )  # Return the optimal rotation matrix, position vector and the error of the best solution

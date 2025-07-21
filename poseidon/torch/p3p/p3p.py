@@ -179,11 +179,10 @@ def P3P(points_3D: Tensor, features_vectors: Tensor) -> Tensor:
         R_estimate: Tensor = torch.matmul(
             torch.matmul(torch.transpose(N, 1, 2), torch.transpose(Q, 1, 2)), T
         )  # (batch_size,3,3)
-        R_estimate = torch.transpose(R_estimate, 1, 2)  # (batch_size,3,3) ??????
 
         # Adding C and R to the solutions
         solutions[:, i, :, :1] = C_estimate
-        solutions[:, i, :, 1:] = R_estimate
+        solutions[:, i, :, 1:] = torch.transpose(R_estimate, 1, 2)
 
     return solutions  # Return the solutions of the P3P algorithm (batch_size,4,3,4)
 
