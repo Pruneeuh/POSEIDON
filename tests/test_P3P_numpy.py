@@ -27,16 +27,11 @@ def test_P3P_estimation_points(_):
     points_3D = generate_points_3D()
     points_2D = projection_points_2D(points_3D, C, R, A)
 
-    # Convert numpy arrays to torch tensors with batch size 1
-
-    features_vectors = compute_features_vectors(
-        points_3D, C, R
-    )  # Compute features vectors (batch_size, 3, 3)
+    # Compute features vectors
+    features_vectors = compute_features_vectors(points_3D, C, R)  # (batch_size, 3, 3)
 
     # Apply P3P algorithm
-    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(
-        0
-    )  # Compute P3P solutions (batch_size, 4, 3, 4)
+    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(0)  # (batch_size, 4, 3, 4)
     solutions_P3P = solutions_P3P.detach().numpy()  # Convert to numpy array (4*3*4)
 
     # Find the best solution from P3P estimation

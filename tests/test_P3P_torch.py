@@ -33,14 +33,12 @@ def test_P3P_estimation_points(_):
     R = convert_matrix_numpy_to_batch(R_np)
     points_3D = convert_matrix_numpy_to_batch(points_3D_np)
     print("points_3D = \n", points_3D)
-    features_vectors = compute_features_vectors(
-        points_3D, C, R
-    )  # Compute features vectors (batch_size, 3, 3)
+
+    # Compute features vectors
+    features_vectors = compute_features_vectors(points_3D, C, R)  #  (batch_size, 3, 3)
 
     # Apply P3P algorithm
-    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(
-        0
-    )  # Compute P3P solutions (batch_size, 4, 3, 4)
+    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(0)  # (batch_size, 4, 3, 4)
     solutions_P3P_np = solutions_P3P.detach().numpy()  # Convert to numpy array (4*3*4)
 
     # Find the best solution from P3P estimation
@@ -72,14 +70,12 @@ def test_P3P_rotation_position(_):
     R = convert_matrix_numpy_to_batch(R_np)
     points_3D = convert_matrix_numpy_to_batch(points_3D_np)
     print("points_3D = \n", points_3D)
-    features_vectors = compute_features_vectors(
-        points_3D, C, R
-    )  # Compute features vectors (batch_size, 3, 3)
+
+    # Compute features vectors
+    features_vectors = compute_features_vectors(points_3D, C, R)  # (batch_size, 3, 3)
 
     # Apply P3P algorithm
-    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(
-        0
-    )  # Compute P3P solutions (batch_size, 4, 3, 4)
+    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(0)  # (batch_size, 4, 3, 4)
     solutions_P3P_np = solutions_P3P.detach().numpy()  # Convert to numpy array (4*3*4)
 
     # Find the best solution from P3P estimation
@@ -116,14 +112,12 @@ def test_P3P_opencv(_):
     R = convert_matrix_numpy_to_batch(R_np)
     points_3D = convert_matrix_numpy_to_batch(points_3D_np)
     print("points_3D = \n", points_3D)
-    features_vectors = compute_features_vectors(
-        points_3D, C, R
-    )  # Compute features vectors (batch_size, 3, 3)
+
+    # Compute features vectors
+    features_vectors = compute_features_vectors(points_3D, C, R)  # (batch_size, 3, 3)
 
     # Apply P3P algorithm
-    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(
-        0
-    )  # Compute P3P solutions (batch_size, 4, 3, 4)
+    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(0)  # (batch_size, 4, 3, 4)
     solutions_P3P_np = solutions_P3P.detach().numpy()  # Convert to numpy array (4*3*4)
 
     # Find the best solution from P3P estimation
