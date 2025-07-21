@@ -10,9 +10,7 @@ def generate_points_3D() -> ndarray:
     return np.random.rand(4, 3) * [2.0, 2.0, 2.0]  # 4 points in 3D (4*3)
 
 
-def projection_points_2D(
-    points_3D: ndarray, C: ndarray, R: ndarray, A: ndarray
-) -> ndarray:
+def projection_points_2D(points_3D: ndarray, C: ndarray, R: ndarray, A: ndarray) -> ndarray:
     """Project 3D points to 2D using camera parameters.
     Args:
         points_3D (np.ndarray): 4 3D points of shape (4, 3).
