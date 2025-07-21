@@ -1,0 +1,78 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "POSEIDON"
+description = "POSEIDON"
+readme = "README.md"
+authors = [
+    {email ="prunemamalet31240@gmail.com"},
+]
+requires-python = ">=3.9"
+dependencies =[
+    "torch",
+]
+license = {text = "MIT"}
+dynamic = ["version"]
+
+
+[project.urls]
+documentation = "https://Pruneeuh.github.io/POSEIDON"
+repository = "https://github.com/Pruneeuh/POSEIDON"
+
+[project.optional-dependencies]
+dev = ["tox>=4.6.4"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["POSEIDON*"]
+
+[tool.setuptools_scm]
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "--import-mode=importlib",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+  | foo.py           # also separately exclude a file named foo.py in
+                     # the root of the project
+)
+'''
+
+
+[tool.mypy]
+files = "autoroot"
+strict_optional = true
+implicit_optional = false
+check_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = [
+    "torch.*", 
+    "numpy.*"
+]
+ignore_missing_imports = true
