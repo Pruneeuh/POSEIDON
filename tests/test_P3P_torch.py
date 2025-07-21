@@ -1,7 +1,7 @@
 import pytest
 from poseidon.numpy.p3p.p3p import find_best_solution_P3P
 from poseidon.numpy.utils.initialize_camera_parameters import *
-from poseidon.numpy.utils.points import *
+from poseidon.numpy.utils.before_p3p import *
 from poseidon.torch.p3p.p3p import P3P, solve_reformat_p3p_solutions
 from poseidon.torch.utils.before_p3p import (
     compute_features_vectors,

@@ -3,7 +3,7 @@ from typing import Sequence
 import cv2
 import numpy as np
 from numpy import ndarray
-from poseidon.numpy.utils.points import projection_points_2D
+from poseidon.numpy.utils.before_p3p import projection_points_2D
 
 
 def solve_reformat_p3p_solutions(points_3D: ndarray, points_2D: ndarray, A: ndarray) -> ndarray:
