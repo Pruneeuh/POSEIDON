@@ -9,9 +9,10 @@ from poseidon.torch.utils.before_p3p import (
 )
 
 precision = 1e-6
+nb_tests = 10
 
 
-@pytest.mark.parametrize("_", range(10))
+@pytest.mark.parametrize("_", range(nb_tests))
 def test_P3P_estimation_points(_):
     """
     Test the P3P algorithm using random parameters by evaluating the projection
@@ -48,7 +49,7 @@ def test_P3P_estimation_points(_):
     assert error < precision, "Error in P3P estimation of the 2D point is too high"
 
 
-@pytest.mark.parametrize("_", range(10))
+@pytest.mark.parametrize("_", range(nb_tests))
 def test_P3P_rotation_position(_):
     """
     Test the P3P algorithm using random parameters by evaluating the error between
@@ -90,7 +91,7 @@ def test_P3P_rotation_position(_):
     ), "Estimated position does not match the original position"
 
 
-@pytest.mark.parametrize("_", range(10))
+@pytest.mark.parametrize("_", range(nb_tests))
 def test_P3P_opencv(_):
     """
     Test the P3P algorithm using random parameters by comparing
