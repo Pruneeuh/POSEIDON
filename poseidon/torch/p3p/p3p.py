@@ -11,9 +11,7 @@ def P3P(points_3D: Tensor, features_vectors: Tensor) -> Tensor:
     Returns:
         solutions : tensor with the solutions of the P3P algorithm : (batch_size,4,3,4)
     """
-    batch_size: int = points_3D.shape[
-        0
-    ]  # Get the batch size from the first dimension of points_3D
+    batch_size: int = points_3D.shape[0]  # Get the batch size from the first dimension of points_3D
 
     # Extract the 3D points
     P1: Tensor = points_3D[:, 0, :]  # (batch_size,3)
@@ -71,9 +69,7 @@ def P3P(points_3D: Tensor, features_vectors: Tensor) -> Tensor:
     nz = torch.reshape(nz, (batch_size, 1, 3))
 
     # Computation of the matrix N and the world point P3
-    N: Tensor = torch.cat(
-        (nx, ny, nz), dim=1
-    )  #  T's equivalent in the world coordinate system
+    N: Tensor = torch.cat((nx, ny, nz), dim=1)  #  T's equivalent in the world coordinate system
     P3_N: Tensor = torch.matmul(N, (P3 - P1).unsqueeze(-1))
 
     # Computation of phi1 et phi2 with 0=x, 1=y, 2=z
@@ -95,16 +91,12 @@ def P3P(points_3D: Tensor, features_vectors: Tensor) -> Tensor:
     )  # tensor.dot(a,b) <=> tensor.sum(a*b)   # (batch_size,1)
 
     b: Tensor = torch.sqrt(1 / (1 - cosBeta**2) - 1)
-    b = torch.where(
-        cosBeta < 0, -b, b
-    )  # If cosBeta < 0, then b = -b    # (batch_size,1)
+    b = torch.where(cosBeta < 0, -b, b)  # If cosBeta < 0, then b = -b    # (batch_size,1)
 
     # Calculation of the coefficients of the polynomial
     a4: Tensor = -(phi2**2) * p2**4 - phi1**2 * p2**4 - p2**4
     a3: Tensor = (
-        2 * p2**3 * d12 * b
-        + 2 * phi2**2 * p2**3 * d12 * b
-        - 2 * phi1 * phi2 * p2**3 * d12
+        2 * p2**3 * d12 * b + 2 * phi2**2 * p2**3 * d12 * b - 2 * phi1 * phi2 * p2**3 * d12
     )
     a2: Tensor = (
         -(phi2**2) * p1**2 * p2**2
@@ -145,9 +137,7 @@ def P3P(points_3D: Tensor, features_vectors: Tensor) -> Tensor:
     # For each solution : comptation of the camera position and rotation matrix
     for i in range(4):
         # Computation of trigonometrics forms
-        cos_teta: Tensor = (roots[:, i, 0]).unsqueeze(
-            -1
-        )  # real part of the root (batch_size,1)
+        cos_teta: Tensor = (roots[:, i, 0]).unsqueeze(-1)  # real part of the root (batch_size,1)
         sin_teta: Tensor = torch.where(
             f3_T_positif, -torch.sqrt(1 - cos_teta**2), torch.sqrt(1 - cos_teta**2)
         )
@@ -177,9 +167,7 @@ def P3P(points_3D: Tensor, features_vectors: Tensor) -> Tensor:
             [sin_alpha, -cos_alpha * cos_teta, -cos_alpha * sin_teta], dim=-1
         )
         Q_row3: Tensor = torch.stack([0 * sin_teta, -sin_teta, cos_teta], dim=-1)
-        Q: Tensor = torch.stack([Q_row1, Q_row2, Q_row3], dim=1).squeeze(
-            2
-        )  # (batch_size,3*3)
+        Q: Tensor = torch.stack([Q_row1, Q_row2, Q_row3], dim=1).squeeze(2)  # (batch_size,3*3)
 
         # Computation of the absolute camera center
         C_estimate = P1.unsqueeze(-1) + torch.matmul(
@@ -214,9 +202,7 @@ def find_best_solution_P3P_batch(
         C_opti (torch.Tensor): Optimal position vector of shape (batch_size,3, 1).
         error (torch.Tensor): Error of the best solution (batch_size,1).
     """
-    batch_size: int = solutions.shape[
-        0
-    ]  # Get the batch size from the first dimension of solutions
+    batch_size: int = solutions.shape[0]  # Get the batch size from the first dimension of solutions
 
     erreurs: Tensor = torch.zeros(batch_size, 4)  # (batch_size,4)
 
@@ -228,18 +214,14 @@ def find_best_solution_P3P_batch(
             dim=(1, 2)
         )  # Check if any element in R is NaN (batch_size,)
 
-        points_2D_P3P: Tensor = projection_all_point3D_to2D(
-            points3D, C, R, A
-        )  # (batch_size,4,2)
+        points_2D_P3P: Tensor = projection_all_point3D_to2D(points3D, C, R, A)  # (batch_size,4,2)
 
         distance: Tensor = torch.norm(points2D - points_2D_P3P, dim=2)  # (batch_size,4)
         erreur_totale: Tensor = torch.sum(
             distance, dim=1
         )  # Sum the distances for each solution (batch_size,)
         erreur_totale = torch.where(is_nan, float("inf"), erreur_totale)
-        erreurs[
-            :, i
-        ] = erreur_totale  # Store the error for the current solution (batch_size,)
+        erreurs[:, i] = erreur_totale  # Store the error for the current solution (batch_size,)
 
     # Find the best solution (with the smallest estimation error)
     value_min: Tensor
@@ -250,12 +232,8 @@ def find_best_solution_P3P_batch(
         torch.arange(batch_size), index_min.squeeze(-1)
     ]  # (batch_size,3,4)
 
-    R_opti: Tensor = best_solutions[
-        :, :, 1:
-    ]  # Optimal rotation matrix (batch_size,3,3)
-    C_opti: Tensor = best_solutions[
-        :, :, :1
-    ]  # Optimal position vector (batch_size,3,1)
+    R_opti: Tensor = best_solutions[:, :, 1:]  # Optimal rotation matrix (batch_size,3,3)
+    C_opti: Tensor = best_solutions[:, :, :1]  # Optimal position vector (batch_size,3,1)
 
     return (
         R_opti,

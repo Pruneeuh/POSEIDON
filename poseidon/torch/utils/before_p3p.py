@@ -10,9 +10,7 @@ def convert_matrix_numpy_to_batch(X_numpy: ndarray) -> Tensor:
     Returns:
         X_torch (torch.Tensor)
     """
-    return torch.tensor(X_numpy, dtype=torch.float64).unsqueeze(
-        0
-    )  # Convert to torch tensor
+    return torch.tensor(X_numpy, dtype=torch.float64).unsqueeze(0)  # Convert to torch tensor
 
 
 def compute_features_vectors(points_3D: Tensor, C: Tensor, R: Tensor) -> Tensor:
@@ -25,13 +23,9 @@ def compute_features_vectors(points_3D: Tensor, C: Tensor, R: Tensor) -> Tensor:
     Returns:
         featuresVect : tensor with the features vectors (batch_size,3,3)
     """
-    batch_size: int = points_3D.shape[
-        0
-    ]  # Get the batch size from the first dimension of points_3D
+    batch_size: int = points_3D.shape[0]  # Get the batch size from the first dimension of points_3D
 
-    P1: Tensor = torch.reshape(
-        points_3D[:, 0], (batch_size, 3, 1)
-    )  # (batch_size, 3, 1)
+    P1: Tensor = torch.reshape(points_3D[:, 0], (batch_size, 3, 1))  # (batch_size, 3, 1)
     P2: Tensor = torch.reshape(points_3D[:, 1], (batch_size, 3, 1))
     P3: Tensor = torch.reshape(points_3D[:, 2], (batch_size, 3, 1))
 
@@ -54,9 +48,7 @@ def compute_features_vectors(points_3D: Tensor, C: Tensor, R: Tensor) -> Tensor:
     return featuresVect  # Return the features vectors need in P3P
 
 
-def projection_one_point3D_to2D(
-    point3D: Tensor, C: Tensor, R: Tensor, A: Tensor
-) -> Tensor:
+def projection_one_point3D_to2D(point3D: Tensor, C: Tensor, R: Tensor, A: Tensor) -> Tensor:
     """
     This function projects 3D point to 2D point using the camera parameters.
     Args:
@@ -68,9 +60,7 @@ def projection_one_point3D_to2D(
         point2D : tensor with the 2D points : (batch_size,2,1)
     """
 
-    batch_size: int = point3D.shape[
-        0
-    ]  # Get the batch size from the first dimension of point3D
+    batch_size: int = point3D.shape[0]  # Get the batch size from the first dimension of point3D
 
     PI: Tensor = torch.cat(
         (torch.eye(3, dtype=torch.float64), torch.zeros((3, 1), dtype=torch.float64)),
@@ -82,9 +72,7 @@ def projection_one_point3D_to2D(
     Rt = torch.cat(
         (
             Rt,
-            (torch.tensor([[0, 0, 0, 1]], dtype=torch.float64)).repeat(
-                batch_size, 1, 1
-            ),
+            (torch.tensor([[0, 0, 0, 1]], dtype=torch.float64)).repeat(batch_size, 1, 1),
         ),
         dim=1,
     )  # (batch_size,4,4)
@@ -106,9 +94,7 @@ def projection_one_point3D_to2D(
     return point2D[:, :2]
 
 
-def projection_all_point3D_to2D(
-    points3D: Tensor, C: Tensor, R: Tensor, A: Tensor
-) -> Tensor:
+def projection_all_point3D_to2D(points3D: Tensor, C: Tensor, R: Tensor, A: Tensor) -> Tensor:
     """
     This function projects all 3D points to 2D points using the camera parameters.
     Args:
@@ -120,9 +106,7 @@ def projection_all_point3D_to2D(
         points2D : tensor with the 2D points : (batch_size,4,2)
     """
 
-    batch_size: int = points3D.shape[
-        0
-    ]  # Get the batch size from the first dimension of points3D
+    batch_size: int = points3D.shape[0]  # Get the batch size from the first dimension of points3D
 
     points2D: Tensor = torch.empty(
         batch_size, 4, 2, dtype=torch.float64
@@ -132,4 +116,3 @@ def projection_all_point3D_to2D(
         pi: Tensor = projection_one_point3D_to2D(Pi, C, R, A)
         points2D[:, i, :] = pi.squeeze(-1)
     return points2D  # Return the projected points in 2D (batch_size,4,2)
-
