@@ -6,6 +6,29 @@
         </picture>
 </div>
 
+<br>
+
+<div align="center">
+  <a href="#">
+        <img src="https://img.shields.io/badge/Python-%E2%89%A53.9-efefef">
+    </a>
+    <a href="https://github.com/Pruneeuh/POSEIDON/actions/workflows/python-tests.yml">
+        <img alt="Tox" src="https://github.com/Pruneeuh/POSEIDON/actions/workflows/python-tests.yml/badge.svg">
+    </a>
+    <a href="https://github.com/Pruneeuh/POSEIDON/actions/workflows/python-linter.yml">
+        <img alt="Lint" src="https://github.com/Pruneeuh/POSEIDON/actions/workflows/python-linter.yml/badge.svg">
+    </a>
+    <a href="https://pepy.tech/project/poseidon">
+        <img alt="Pepy" src="https://static.pepy.tech/badge/poseidon">
+    </a>
+    <a href="#">
+        <img src="https://img.shields.io/badge/License-MIT-efefef">
+    </a>
+    <br>
+    <a href="https://Pruneeuh.github.io/POSEIDON/"><strong>Explore POSEIDON docs »</strong></a>
+</div>
+<br>
+
 # POSEIDON
 POSe estimation with Explicit / Implicit Differentiable OptimisatioN
 
