@@ -21,7 +21,7 @@ def generate_points_3D(batch_size) -> Tensor:
     Returns:
         points_3D (torch.Tensor): Random 3D points of shape (batch_size, 4, 3).
     """
-    return torch.rand(batch_size, 3, 4) * 4 - 2
+    return torch.rand(batch_size, 4, 3, dtype=torch.float64) * 4 - 2
 
 
 def compute_features_vectors(points_3D: Tensor, C: Tensor, R: Tensor) -> Tensor:
