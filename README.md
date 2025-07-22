@@ -1,7 +1,15 @@
+<div align="center">
+        <picture>
+                <source media="(prefers-color-scheme: dark)" srcset="./docs/assets/banner.png">
+                <source media="(prefers-color-scheme: light)" srcset="./docs/assets/banner.png">
+                <img alt="Library Banner" src="./docs/assets/logo_provisoire.png" width="500" height="300">
+        </picture>
+</div>
+
 # POSEIDON
 POSe estimation with Explicit / Implicit Differentiable OptimisatioN
 
-POSEIDON is a Python project focused on estimating the 3D position (pose) of a camera using the P3P (Perspective-3-Point) algorithm. It offers a clean and modular implementation of the core algorithm for precise geometric computations.
+**POSEIDON** is a Python project focused on estimating the 3D position (pose) of a camera using the P3P (Perspective-3-Point) algorithm. It offers a clean and modular implementation of the core algorithm for precise geometric computations.
 
 ## 📚 Table of Contents
 - [Motivation](#motivation)
