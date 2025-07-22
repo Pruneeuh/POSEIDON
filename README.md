@@ -1,7 +1,7 @@
 <div align="center">
         <picture>
-                <source media="(prefers-color-scheme: dark)" srcset="./docs/assets/banner.png">
-                <source media="(prefers-color-scheme: light)" srcset="./docs/assets/banner.png">
+                <source media="(prefers-color-scheme: dark)" srcset="./docs/assets/logo_provisoire.png">
+                <source media="(prefers-color-scheme: light)" srcset="./docs/assets/logo_provisoire.png">
                 <img alt="Library Banner" src="./docs/assets/logo_provisoire.png" width="500" height="300">
         </picture>
 </div>
