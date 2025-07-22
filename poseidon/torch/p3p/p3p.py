@@ -2,6 +2,11 @@ import torch
 from poseidon.torch.utils.before_p3p import projection_all_point3D_to2D
 from torch import Tensor
 
+# import polynomial_root_calculation_4th_degree_ferrari
+import sys
+sys.path.append("C:/Users/pmamalet/Documents/Stage/AutoRoot/")
+from autoroot.torch.quartic.quartic import polynomial_root_calculation_4th_degree_ferrari
+
 
 def P3P(points_3D: Tensor, features_vectors: Tensor) -> Tensor:
     """

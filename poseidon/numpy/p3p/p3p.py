@@ -325,7 +325,7 @@ def find_best_solution_P3P(
             min = erreurs[i]
             indice_min = i
 
-    R_opti: ndarray = np.transpose(solutions[indice_min, :, 1:])
+    R_opti: ndarray = solutions[indice_min, :, 1:]
     C_opti: ndarray = solutions[indice_min, :, :1]
 
     return (
