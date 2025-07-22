@@ -19,7 +19,7 @@
         <img alt="Lint" src="https://github.com/Pruneeuh/POSEIDON/actions/workflows/python-linter.yml/badge.svg">
     </a>
     <a href="https://pepy.tech/project/poseidon">
-        <img alt="Pepy" src="https://static.pepy.tech/badge/poseidon">
+        <img alt="Pepy" src="https://static.pepy.tech/badge/poseidon_torch">
     </a>
     <a href="#">
         <img src="https://img.shields.io/badge/License-MIT-efefef">
