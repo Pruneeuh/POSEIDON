@@ -1,3 +1,8 @@
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__) + "/.."))
+
 import pytest
 from poseidon.numpy.p3p.p3p import (
     P3P,
@@ -31,17 +36,17 @@ def test_P3P_estimation_points(_):
     features_vectors = compute_features_vectors(points_3D, C, R)  # (batch_size, 3, 3)
 
     # Apply P3P algorithm
-    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(0)  # (batch_size, 4, 3, 4)
-    solutions_P3P = solutions_P3P.detach().numpy()  # Convert to numpy array (4*3*4)
+    solutions_P3P = P3P(points_3D[:3], features_vectors)
 
     # Find the best solution from P3P estimation
     R_opti, C_opti, error = find_best_solution_P3P(points_2D, points_3D, solutions_P3P, A)
+    print("error = ", error)
 
     assert error < precision, "Error in P3P estimation of the 2D point is too high"
 
 
 @pytest.mark.parametrize("_", range(nb_tests))
-def test_P3P_estimation_points(_):
+def test_P3P_rotation_position(_):
     """
     Test the P3P algorithm in numpy using random parameters by evaluating the error
     between the ground truth and the estimated camera pose (position and rotation)
@@ -60,11 +65,13 @@ def test_P3P_estimation_points(_):
     features_vectors = compute_features_vectors(points_3D, C, R)  # (batch_size, 3, 3)
 
     # Apply P3P algorithm
-    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(0)  # (batch_size, 4, 3, 4)
-    solutions_P3P = solutions_P3P.detach().numpy()  # Convert to numpy array (4*3*4)
+    solutions_P3P = P3P(points_3D[:3], features_vectors)
+    print("solutions_P3P = \n", solutions_P3P)
 
     # Find the best solution from P3P estimation
     R_opti, C_opti, error = find_best_solution_P3P(points_2D, points_3D, solutions_P3P, A)
+    print("R_opti = \n", R_opti)
+    print("R = \n", R)
 
     assert np.allclose(
         R_opti, R, atol=precision
@@ -96,10 +103,8 @@ def test_P3P_opencv(_):
     )  # Compute features vectors (batch_size, 3, 3)
 
     # Apply P3P algorithm
-    solutions_P3P = P3P(points_3D[:3], features_vectors).squeeze(
-        0
-    )  # Compute P3P solutions (batch_size, 4, 3, 4)
-    solutions_P3P = solutions_P3P.detach().numpy()  # Convert to numpy array (4*3*4)
+    solutions_P3P = P3P(points_3D[:3], features_vectors)
+    print("solutions_P3P = \n", solutions_P3P)
 
     # Find the best solution from P3P estimation
     R_opti_np, C_opti_np, error = find_best_solution_P3P(points_2D, points_3D, solutions_P3P, A)
@@ -109,10 +114,13 @@ def test_P3P_opencv(_):
     R_opti_opencv, C_opti_opencv, erreur = find_best_solution_P3P(
         points_2D, points_3D, solutions_opencv, A
     )
+    print("R= \n", R)
+    print("R_opti_np = \n", R_opti_np)
+    print("R_opti_opencv = \n", R_opti_opencv)
 
     assert np.allclose(
-        R_opti_np, R_opti_opencv, atol=precision
+        R_opti_np, R_opti_opencv, atol=1e-4
     ), "Estimated rotation by Poseidon does not match OpenCV's P3P implementation"
     assert np.allclose(
-        C_opti_np, C_opti_opencv, atol=precision
+        C_opti_np, C_opti_opencv, atol=1e-4
     ), "Estimated position by Poseidon does not match OpenCV's P3P implementation"

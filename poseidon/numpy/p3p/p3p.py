@@ -2,6 +2,9 @@ from typing import Sequence
 
 import cv2
 import numpy as np
+
+## Remove duplicate sys.path modification
+from autoroot.numpy.quartic import polynomial_root_calculation_4th_degree_ferrari_numpy
 from numpy import ndarray
 from poseidon.numpy.utils.before_p3p import projection_points_2D
 
@@ -122,8 +125,6 @@ def P3P(points_3D: ndarray, features_vectors: ndarray) -> ndarray:
 
     if cosBeta < 0:
         b = -b
-    print("b = ", b)
-    print(type(b))
 
     # Calculation of the coefficients of the polynomial
     a4 = -(phi2**2) * p2**4 - phi1**2 * p2**4 - p2**4
@@ -159,12 +160,12 @@ def P3P(points_3D: ndarray, features_vectors: ndarray) -> ndarray:
         + phi2**2 * p2**2 * d12**2 * b**2
     )
 
-    roots = polynomial_root_calculation_4th_degree_ferrari(np.array([a0, a1, a2, a3, a4]))
-
+    roots = polynomial_root_calculation_4th_degree_ferrari_numpy(a0, a1, a2, a3, a4)
     print("roots = \n", roots)
 
     # For each solution of the polynomial
     for i in range(4):
+        print("iteration n°", i + 1)
         # Computation of trigonometrics forms
         cos_teta = np.real(roots[i])
 
@@ -176,7 +177,6 @@ def P3P(points_3D: ndarray, features_vectors: ndarray) -> ndarray:
         cot_alpha = ((phi1 / phi2) * p1 + cos_teta * p2 - d12 * b) / (
             (phi1 / phi2) * cos_teta * p2 - p1 + d12
         )
-        print("cot_alpha = ", cot_alpha)
 
         sin_alpha = np.sqrt(1 / (cot_alpha**2 + 1))
         cos_alpha = np.sqrt(1 - sin_alpha**2)
@@ -194,7 +194,7 @@ def P3P(points_3D: ndarray, features_vectors: ndarray) -> ndarray:
         Q = [
             [-cos_alpha, -sin_alpha * cos_teta, -sin_alpha * sin_teta],
             [sin_alpha, -cos_alpha * cos_teta, -cos_alpha * sin_teta],
-            [0, -sin_teta, cos_teta],
+            [0 * sin_teta, -sin_teta, cos_teta],
         ]  # (3*3)
 
         # Computation of the absolute camera center
@@ -203,12 +203,12 @@ def P3P(points_3D: ndarray, features_vectors: ndarray) -> ndarray:
 
         # Computation of the orientation matrix
         R_estimate = np.transpose(N) @ np.transpose(Q) @ T  # (3*3)
-
+        print("R_estimate = \n", R_estimate)
         # Adding C and R to the solutions
         solutions[i, :, :1] = C_estimate
         solutions[i, :, 1:] = np.transpose(R_estimate)
 
-        return solutions
+    return solutions
 
 
 def print_best_solution_P3P(
