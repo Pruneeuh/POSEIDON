@@ -1,5 +1,13 @@
-import pytest
-from poseidon.torch.p3p.p3p import P3P, find_best_solution_P3P_batch
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+import time
+
+from poseidon.numpy.p3p.p3p import solve_reformat_p3p_solutions
+from poseidon.torch.p3p.p3p import P3P
 from poseidon.torch.utils.before_p3p import (
     compute_features_vectors,
     generate_points_3D,
@@ -9,11 +17,10 @@ from poseidon.torch.utils.intialize_camera_parameters import *
 
 precision = 1e-6
 nb_tests = 10
-batch_size = 5
+batch_size = 5000
 
 
-@pytest.mark.parametrize("_", range(nb_tests))
-def test_P3P_estimation_points(_):
+def test_P3P_estimation_points():
     """
     Test the P3P algorithm in PyTorch with batched inputs using random parameters.
 
@@ -31,10 +38,29 @@ def test_P3P_estimation_points(_):
     points_2D = projection_all_point3D_to2D(points_3D, C, R, A)
 
     # Compute features vectors
-    features_vectors = compute_features_vectors(points_3D, C, R)  # (batch_size, 3, 3)
+    features_vectors = compute_features_vectors(points_3D[:, :3], C, R)  # (batch_size, 3, 3)
 
     # Apply P3P algorithm
-    solutions_P3P = P3P(points_3D[:3], features_vectors)
+    start_torch = time.time()
+    solutions_P3P_torch = P3P(points_3D[:, :3], features_vectors)
+    end_torch = time.time()
 
-    # Find the best solution from P3P estimation
-    R_opti, C_opti, error = find_best_solution_P3P_batch(solutions_P3P, points_3D, points_2D)
+    total_time_torch = end_torch - start_torch
+    total_time_opencv = 0
+
+    for i in range(batch_size):
+        A_actual = A[i].detach().numpy()
+        points_2D_actual = points_2D[i].detach().numpy()
+        points_3D_actual = points_3D[i].detach().numpy()
+        start_opencv = time.time()
+        solutions_P3P_opencv = solve_reformat_p3p_solutions(
+            points_3D_actual, points_2D_actual, A_actual
+        )
+        end_opencv = time.time()
+        total_time_opencv += end_opencv - start_opencv
+
+    print(f"Total time for P3P in PyTorch: {total_time_torch:.4f} seconds")
+    print(f"Total time for P3P in OpenCV: {total_time_opencv:.4f} seconds")
+
+
+test_P3P_estimation_points()
