@@ -17,7 +17,7 @@ def generate_camera_parameters_batch(batch_size) -> Tensor:
     A: Tensor = torch.empty(batch_size, 3, 3, dtype=torch.float64)
 
     for i in range(batch_size):
-        A[i] = generate_camera_parameters()
+        A[i] = torch.tensor(generate_camera_parameters(), dtype=torch.float64)
 
     return A
 
@@ -32,7 +32,7 @@ def generate_position_matrix_batch(batch_size) -> Tensor:
     C: Tensor = torch.empty(batch_size, 3, 1, dtype=torch.float64)
 
     for i in range(batch_size):
-        C[i] = generate_position_matrix()
+        C[i] = torch.tensor(generate_position_matrix(), dtype=torch.float64)
 
     return C
 
@@ -47,6 +47,6 @@ def generate_rotation_matrix_batch(batch_size) -> Tensor:
     R: Tensor = torch.empty(batch_size, 3, 3, dtype=torch.float64)
 
     for i in range(batch_size):
-        R[i] = generate_rotation_matrix()
+        R[i] = torch.tensor(generate_rotation_matrix(), dtype=torch.float64)
 
     return R
