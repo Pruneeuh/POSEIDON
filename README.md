@@ -52,7 +52,13 @@ POSe estimation with Explicit / Implicit Differentiable OptimisatioN
 **A compléter**
 
 ## 🔥 Tutorials
-**A compléter**
+
+| **Tutorial Name**           | Notebook                                                                                                                                                           |
+| :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| Apply the P3P algorithm - ... | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Pruneeuh/POSEIDON/blob/main/tutorials/Tutorial_1_P3P.ipynb)            |
+| Apply the P3P algorithm with a batch - ... | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Pruneeuh//POSEIDON/blob/main/tutorials/Tutorial_2.ipynb)            |
+
+
 # Project Structure :
 ```
 📂 poseidon/                    # Main source director*
