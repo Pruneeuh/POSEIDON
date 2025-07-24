@@ -12,6 +12,8 @@ authors = [
 requires-python = ">=3.9"
 dependencies =[
     "torch",
+    "numpy",
+    "autoroot@git+https://github.com/Pruneeuh/AutoRoot",
 ]
 license = {text = "MIT"}
 dynamic = ["version"]
