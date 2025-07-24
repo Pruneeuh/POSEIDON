@@ -21,18 +21,13 @@ def generate_camera_parameters() -> ndarray:
     return A
 
 
-def generate_rotation_matrix() -> ndarray:
-    """Generate a random rotation matrix.
-    The angles are randomly generated in the pages given by the LARD dataset
+def generate_rotation_matrix_with_angles(yaw, pitch, rax) -> ndarray:
+    """Generate rotation matrix from yaw, pitch, and rax.
     The matrix need to be orthogonal and have a determinant of 1.
 
     Returns:
         R (np.ndarray) : Rotation matrix of shape (3, 3).
     """
-    yaw: float = np.radians(np.random.uniform(-10, 10))
-    pitch: float = np.radians(np.random.uniform(-8, 8))
-    rax: float = np.radians(np.random.uniform(-10, 10))
-
     Rx: ndarray = np.array(
         [[1, 0, 0], [0, np.cos(rax), -np.sin(rax)], [0, np.sin(rax), np.cos(rax)]]
     )
@@ -50,6 +45,21 @@ def generate_rotation_matrix() -> ndarray:
     R: ndarray = Rz @ Ry @ Rx  # rotation matrix  (3*3)
 
     return R
+
+
+def generate_rotation_matrix() -> ndarray:
+    """Generate a random rotation matrix.
+    The angles are randomly generated in the pages given by the LARD dataset
+    The matrix need to be orthogonal and have a determinant of 1.
+
+    Returns:
+        R (np.ndarray) : Rotation matrix of shape (3, 3).
+    """
+    yaw: float = np.radians(np.random.uniform(-10, 10))
+    pitch: float = np.radians(np.random.uniform(-8, 8))
+    rax: float = np.radians(np.random.uniform(-10, 10))
+
+    return generate_rotation_matrix_with_angles(yaw, pitch, rax)
 
 
 def generate_position_matrix() -> ndarray:
