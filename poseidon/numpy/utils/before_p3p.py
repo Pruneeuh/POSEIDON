@@ -7,7 +7,7 @@ def generate_points_3D() -> ndarray:
     points_3D (np.ndarray): Random 3D points of shape (4, 3).
     """
 
-    return np.random.rand(4, 3) * [2.0, 2.0, 2.0]  # 4 points in 3D (4*3)
+    return np.random.rand(4, 3) * [50.0, 50.0, 50.0]  # 4 points in 3D (4*3)
 
 
 def projection_points_2D(points_3D: ndarray, C: ndarray, R: ndarray, A: ndarray) -> ndarray:

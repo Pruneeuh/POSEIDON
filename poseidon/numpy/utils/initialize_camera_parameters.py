@@ -67,7 +67,7 @@ def generate_position_matrix() -> ndarray:
     Returns:
         C (np.ndarray): Position vector of shape (3, 1).
     """
-    x: float = np.random.uniform(-2, 2)
-    y: float = np.random.uniform(-2, 2)
-    z: float = np.random.uniform(1, 4)
+    x: float = np.random.uniform(-50, 50)
+    y: float = np.random.uniform(-50, 50)
+    z: float = np.random.uniform(1, 50)
     return np.array([[x], [y], [z]])  # position vector (3*1)
