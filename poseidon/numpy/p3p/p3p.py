@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 
 ## Remove duplicate sys.path modification
-from autoroot.numpy.quartic import (
-    polynomial_root_calculation_4th_degree_ferrari_numpy,  # type: ignore
+from autoroot.numpy.quartic import (  # type: ignore
+    polynomial_root_calculation_4th_degree_ferrari_numpy,
 )
 from numpy import ndarray
 from poseidon.numpy.utils.before_p3p import projection_points_2D

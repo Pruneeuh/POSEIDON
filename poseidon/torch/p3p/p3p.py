@@ -1,14 +1,9 @@
-# import polynomial_root_calculation_4th_degree_ferrari
-import sys
-
 import torch
+from autoroot.torch.quartic.quartic import (  # type: ignore
+    polynomial_root_calculation_4th_degree_ferrari,
+)
 from poseidon.torch.utils.before_p3p import projection_all_point3D_to2D
 from torch import Tensor
-
-sys.path.append("C:/Users/pmamalet/Documents/Stage/AutoRoot/")
-from autoroot.torch.quartic.quartic import (
-    polynomial_root_calculation_4th_degree_ferrari,  # type: ignore
-)
 
 
 def P3P(points_3D: Tensor, features_vectors: Tensor) -> Tensor:

@@ -75,7 +75,7 @@ disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = [
-    "torch.*",
-    "numpy.*"
+    "cv2",
+    "autoroot.*"
 ]
 ignore_missing_imports = true
