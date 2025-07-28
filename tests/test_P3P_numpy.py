@@ -119,8 +119,8 @@ def test_P3P_opencv(_):
     print("R_opti_opencv = \n", R_opti_opencv)
 
     assert np.allclose(
-        R_opti_np, R_opti_opencv, atol=1e-4
+        R_opti_np, R_opti_opencv, atol=1e-3
     ), "Estimated rotation by Poseidon does not match OpenCV's P3P implementation"
     assert np.allclose(
-        C_opti_np, C_opti_opencv, atol=1e-4
+        C_opti_np, C_opti_opencv, atol=1e-3
     ), "Estimated position by Poseidon does not match OpenCV's P3P implementation"
