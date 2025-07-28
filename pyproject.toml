@@ -14,6 +14,7 @@ dependencies =[
     "torch",
     "numpy",
     "autoroot@git+https://github.com/Pruneeuh/AutoRoot",
+    "opencv-python"
 ]
 license = {text = "MIT"}
 dynamic = ["version"]

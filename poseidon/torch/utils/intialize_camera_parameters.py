@@ -7,7 +7,7 @@ from poseidon.numpy.utils.initialize_camera_parameters import (
 from torch import Tensor
 
 
-def generate_camera_parameters_batch(batch_size) -> Tensor:
+def generate_camera_parameters_batch(batch_size : int) -> Tensor:
     """Generate random camera parameters.
     Args:
         batch_size (int): Number of camera parameters matrix to generate.
@@ -22,7 +22,7 @@ def generate_camera_parameters_batch(batch_size) -> Tensor:
     return A
 
 
-def generate_position_matrix_batch(batch_size) -> Tensor:
+def generate_position_matrix_batch(batch_size : int) -> Tensor:
     """Generate random position vectors.
     Args:
         batch_size (int): Number of position vectors to generate.
@@ -37,7 +37,7 @@ def generate_position_matrix_batch(batch_size) -> Tensor:
     return C
 
 
-def generate_rotation_matrix_batch(batch_size) -> Tensor:
+def generate_rotation_matrix_batch(batch_size : int) -> Tensor:
     """Generate random rotation matrices.
     Args:
         batch_size (int): Number of rotation matrices to generate.
