@@ -83,6 +83,11 @@ POSe estimation with Explicit / Implicit Differentiable OptimisatioN
 ├── 📄 test_P3P_numpy.py
 ├── 📄 test_P3P_torch.py
 
+📂 tutorials/                   # Tutorials
+├── 📄 Tutorial_1_P3P.ipynb
+├── 📄 Tutorial_2_P3P_LARD.ipynb
+├── 📄 .py
+
 
 📄 .pre-commit-config.yaml       # Pre-commit hooks config
 📄 pyproject.toml                # Build system and tool configs
