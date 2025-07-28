@@ -28,7 +28,7 @@ dev = ["tox>=4.6.4"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["POSEIDON*"]
+include = ["poseidon*"]
 
 [tool.setuptools_scm]
 
