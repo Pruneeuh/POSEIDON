@@ -1,12 +1,15 @@
-
-
+import numpy as np
 import pytest
-from poseidon.numpy import *
-from poseidon.torch.p3p.p3p import P3P
-from poseidon.torch.utils.before_p3p import (
-    compute_features_vectors,
-    convert_matrix_numpy_to_batch,
+from poseidon.numpy import (
+    find_best_solution_P3P,
+    generate_camera_parameters,
+    generate_points_3D,
+    generate_position_matrix,
+    generate_rotation_matrix,
+    projection_points_2D,
+    solve_reformat_p3p_solutions,
 )
+from poseidon.torch import P3P, compute_features_vectors, convert_matrix_numpy_to_batch
 
 precision = 1e-5
 nb_tests = 10

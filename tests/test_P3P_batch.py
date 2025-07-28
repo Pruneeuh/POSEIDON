@@ -2,12 +2,12 @@ import time
 
 from poseidon.numpy.p3p import solve_reformat_p3p_solutions
 from poseidon.torch.p3p import P3P
+from poseidon.torch.utils import *
 from poseidon.torch.utils import (
     compute_features_vectors,
     generate_points_3D,
     projection_all_point3D_to2D,
 )
-from poseidon.torch.utils import *
 
 precision = 1e-6
 nb_tests = 10
