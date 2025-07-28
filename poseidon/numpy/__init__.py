@@ -1,1 +1,2 @@
-from .utils.before_p3p import generate_points_3D
+from .p3p.p3p import *
+from .utils import *

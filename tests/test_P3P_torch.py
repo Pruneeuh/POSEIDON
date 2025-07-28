@@ -1,13 +1,7 @@
-import os
-import sys
-
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__) + "/.."))
 
 
 import pytest
-from poseidon.numpy.p3p.p3p import find_best_solution_P3P, solve_reformat_p3p_solutions
-from poseidon.numpy.utils.before_p3p import *
-from poseidon.numpy.utils.initialize_camera_parameters import *
+from poseidon.numpy import *
 from poseidon.torch.p3p.p3p import P3P
 from poseidon.torch.utils.before_p3p import (
     compute_features_vectors,
