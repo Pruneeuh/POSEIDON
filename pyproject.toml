@@ -65,7 +65,7 @@ exclude = '''
 
 
 [tool.mypy]
-files = "autoroot"
+files = "poseidon"
 strict_optional = true
 implicit_optional = false
 check_untyped_defs = true
