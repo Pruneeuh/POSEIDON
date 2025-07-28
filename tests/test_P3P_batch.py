@@ -1,11 +1,13 @@
 import time
 
-from poseidon.numpy.p3p import solve_reformat_p3p_solutions
-from poseidon.torch.p3p import P3P
-from poseidon.torch.utils import *
-from poseidon.torch.utils import (
+from poseidon.numpy import solve_reformat_p3p_solutions
+from poseidon.torch import (
+    P3P,
     compute_features_vectors,
+    generate_camera_parameters_batch,
     generate_points_3D,
+    generate_position_matrix_batch,
+    generate_rotation_matrix_batch,
     projection_all_point3D_to2D,
 )
 
