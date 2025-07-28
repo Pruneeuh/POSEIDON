@@ -55,8 +55,8 @@ POSe estimation with Explicit / Implicit Differentiable OptimisatioN
 
 | **Tutorial Name**           | Notebook                                                                                                                                                           |
 | :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| Apply the P3P algorithm - ... | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Pruneeuh/POSEIDON/blob/main/tutorials/Tutorial_1_P3P.ipynb)            |
-| Apply the P3P algorithm with a batch - ... | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Pruneeuh//POSEIDON/blob/main/tutorials/Tutorial_2.ipynb)            |
+| Apply the P3P algorithm | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Pruneeuh/POSEIDON/blob/main/tutorials/Tutorial_1_P3P.ipynb)            |
+| Apply the P3P algorithm with LARD example | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Pruneeuh//POSEIDON/blob/main/tutorials/Tutorial_2.ipynb)            |
 
 
 # Project Structure :
@@ -114,9 +114,9 @@ Tests are written using pytest and utilize numpy for result verification (especi
 ## 👍 Contributing
 
 #To contribute, you can open an
-#[issue](https://github.com/Pruneeuh/AutoRoot/issues), or fork this
+#[issue](https://github.com/Pruneeuh/POSEIDON/issues), or fork this
 #repository and then submit changes through a
-#[pull-request](https://github.com/Pruneeuh/AutoRoot/pulls).
+#[pull-request](https://github.com/Pruneeuh/POSEIDON/pulls).
 We use [black](https://pypi.org/project/black/) to format the code and follow PEP-8 convention.
 To check that your code will pass the lint-checks, you can run:
 
