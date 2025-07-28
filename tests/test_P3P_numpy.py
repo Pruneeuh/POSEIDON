@@ -1,16 +1,15 @@
-import os
-import sys
-
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__) + "/.."))
-
 import pytest
-from poseidon.numpy.p3p.p3p import (
+from poseidon.numpy import (
     P3P,
+    compute_features_vectors,
     find_best_solution_P3P,
+    generate_camera_parameters,
+    generate_points_3D,
+    generate_position_matrix,
+    generate_rotation_matrix,
+    projection_points_2D,
     solve_reformat_p3p_solutions,
 )
-from poseidon.numpy.utils.before_p3p import *
-from poseidon.numpy.utils.initialize_camera_parameters import *
 
 precision = 1e-6
 nb_tests = 10
