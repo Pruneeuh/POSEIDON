@@ -4,7 +4,9 @@ import cv2
 import numpy as np
 
 ## Remove duplicate sys.path modification
-from autoroot.numpy.quartic import polynomial_root_calculation_4th_degree_ferrari_numpy # type: ignore
+from autoroot.numpy.quartic import (
+    polynomial_root_calculation_4th_degree_ferrari_numpy,  # type: ignore
+)
 from numpy import ndarray
 from poseidon.numpy.utils.before_p3p import projection_points_2D
 
@@ -251,7 +253,7 @@ def print_best_solution_P3P(
             for j in range(len(points_2D)):
                 erreur_pt: float = np.linalg.norm(
                     points_2D_P3P[j, :] - points_2D[j, :]
-                ) # type: ignore  # conversion in float for mypy 
+                )  # type: ignore  # conversion in float for mypy
                 print("erreur P", j + 1, " = ", type(erreur_pt))
                 erreurs[i] += erreur_pt
 
@@ -311,7 +313,7 @@ def find_best_solution_P3P(
                 points_3D, C, R, A
             )  # Project the 3D points to 2D using the P3P solution
             for j in range(len(points_2D)):
-                erreur_pt: float = np.linalg.norm(points_2D_P3P[j, :] - points_2D[j, :]) # type: ignore
+                erreur_pt: float = np.linalg.norm(points_2D_P3P[j, :] - points_2D[j, :])  # type: ignore
                 erreurs[i] += erreur_pt
 
         else:

@@ -21,7 +21,7 @@ def generate_camera_parameters() -> ndarray:
     return A
 
 
-def generate_rotation_matrix_with_angles(yaw : float, pitch : float, rax : float) -> ndarray:
+def generate_rotation_matrix_with_angles(yaw: float, pitch: float, rax: float) -> ndarray:
     """Generate rotation matrix from yaw, pitch, and rax.
     The matrix need to be orthogonal and have a determinant of 1.
 
