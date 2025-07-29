@@ -32,6 +32,7 @@ def solve_reformat_p3p_solutions(points_3D: ndarray, points_2D: ndarray, A: ndar
         ),
         flags=cv2.SOLVEPNP_P3P,
     )  # Solve P3P problem using OpenCV
+    print("nb sol = ", nbsol)
 
     solutions: ndarray = np.zeros((4, 3, 4))  # (4*3*4)
 
