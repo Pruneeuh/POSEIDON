@@ -5,6 +5,7 @@ from numpy import ndarray
 def generate_points_3D() -> ndarray:
     """Generate random 3D points in a space 4*4*4
     points_3D (np.ndarray): Random 3D points of shape (4, 3).
+    Each row is a point in 3D space (x, y, z).
     """
 
     return np.random.rand(4, 3) * [50.0, 50.0, 50.0]  # 4 points in 3D (4*3)
