@@ -39,20 +39,18 @@ def get_feature_vectors(points2D: Tensor, A: Tensor) -> Tensor:
     return featuresVect
 
 
-def generate_synthetic_2D3Dpoints(R, C, A, P1, P2, P3):
+def generate_synthetic_2D3Dpoints(R, C, A, points3D):
     """
     Generate synthetic corresponding 2D and 3D points for P3P problem.
     Args:
         R (torch.Tensor): Rotation matrix (batch_size,3,3).
         C (torch.Tensor): Camera center (batch_size,3).
         A (torch.Tensor): Camera intrinsic matrix (batch_size,3,3).
-        P1, P2, P3 (list): 3D points in world coordinates (batch_size,3).
+        points3D (torch.Tensor): 3D points in world coordinates (batch_size,3,3).
     Returns:
         points2D (torch.Tensor): Projected 2D points in image coordinates (batch_size,3,2).
     """
     batch_size = R.shape[0]  # Get the batch size from the first dimension of R
-
-    points3D = torch.stack([P1, P2, P3], dim=-1)  # Shape (batch_size,3, 3)
 
     # Compute camera translation vector from rotation R and position C
     t = torch.matmul(-R, torch.reshape(C, (batch_size, 3, 1)))  # ( batch_size, 3, 1)
