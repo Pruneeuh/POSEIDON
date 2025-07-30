@@ -2,7 +2,7 @@ import torch
 from autoroot.torch.quartic.quartic import (  # type: ignore
     polynomial_root_calculation_4th_degree_ferrari,
 )
-from poseidon.torch.utils.before_p3p import projection_all_point3D_to2D
+from poseidon.torch.utils.new_before_p3p import generate_synthetic_2D3Dpoints
 from torch import Tensor
 
 
@@ -217,7 +217,7 @@ def find_best_solution_P3P_batch(
             dim=(1, 2)
         )  # Check if any element in R is NaN (batch_size,)
 
-        points_2D_P3P: Tensor = projection_all_point3D_to2D(points3D, C, R, A)  # (batch_size,4,2)
+        points_2D_P3P: Tensor = generate_synthetic_2D3Dpoints(R, C, A, points3D)  # (batch_size,4,2)
 
         distance: Tensor = torch.norm(points2D - points_2D_P3P, dim=2)  # (batch_size,4)
         erreur_totale: Tensor = torch.sum(
