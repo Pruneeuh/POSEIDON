@@ -46,14 +46,14 @@ def generate_synthetic_2D3Dpoints(R, C, A, points3D):
         R (torch.Tensor): Rotation matrix (batch_size,3,3).
         C (torch.Tensor): Camera center (batch_size,3).
         A (torch.Tensor): Camera intrinsic matrix (batch_size,3,3).
-        points3D (torch.Tensor): 3D points in world coordinates (batch_size,3,3).
+        points3D (torch.Tensor): 3D points in world coordinates (batch_size,4,3).
     Returns:
-        points2D (torch.Tensor): Projected 2D points in image coordinates (batch_size,3,2).
+        points2D (torch.Tensor): Projected 2D points in image coordinates (batch_size,4,2).
     """
     batch_size = R.shape[0]  # Get the batch size from the first dimension of R
-
+    points3D = torch.transpose(points3D, 1, 2)
     # Compute camera translation vector from rotation R and position C
-    t = torch.matmul(-R, torch.reshape(C, (batch_size, 3, 1)))  # ( batch_size, 3, 1)
+    t = torch.matmul(-R, torch.reshape(C, (batch_size, 3, 1)))  # (batch_size, 3, 1)
 
     # Build projection matrix: P = A [R|t]
     Rt = torch.cat([R, t], dim=2)  # (batch_size, 3, 4)
@@ -62,8 +62,8 @@ def generate_synthetic_2D3Dpoints(R, C, A, points3D):
 
     # Convert 3D points to homogeneous coordinates (4x3)
     points3D_h = torch.cat(
-        [points3D, torch.ones(batch_size, 1, 3, dtype=torch.float64)], dim=1
-    )  # (batch_size, 4, 3)
+        [points3D, torch.ones(batch_size, 1, 4, dtype=torch.float64)], dim=1
+    )  # (batch_size, 4, 4)
 
     # Project 3D points to 2D image plane using projection matrix
     proj = torch.matmul(P, points3D_h)  # (batch_size, 3, 3)
