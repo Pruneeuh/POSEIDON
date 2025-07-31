@@ -46,7 +46,11 @@ POSe estimation with Explicit / Implicit Differentiable OptimisatioN
 - [Acknowledgments](#-acknowledgments)
 
 # Motivation
-**A compléter**
+**Optimizing the YOLO-NAS Learning Function for Vision-Based Landing via Differentiable PnP Integration Internship Context** 
+Vision-Based Landing (VBL) is a complementary approach to traditional landing systems such as ILS (Instrument Landing System) and GPS. It uses visual information and artificial intelligence models to estimate the 3D position of an aircraft (latitude, longitude, altitude) during landing.  
+A derivative of the YOLO object detection framework, YOLO-NAS, is explored for this task. The model is used to detect the runway and localize its four corners, whose 3D coordinates are known. These detections are then used in a PnP (Perspective-n-Point) algorithm to estimate the aircraft’s pose.  
+However, directly applying a joint estimation learning objective—originally designed for YOLO-NAS—does not align well with industrial requirements. In practice, vision-based systems are expected to meet accuracy tolerances that depend on the aircraft's distance to the runway, as defined by systems like ILS. A VBL system that respects the same tolerances is considered acceptable.  
+These error margins can potentially be incorporated directly into the training phase by integrating the pose estimation process (PnP) into the model’s loss function.
 
 # Usage
 **A compléter**
