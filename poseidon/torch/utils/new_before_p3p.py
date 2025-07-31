@@ -33,7 +33,7 @@ def get_feature_vectors(points2D: Tensor, A: Tensor) -> Tensor:
     return featuresVect  # (batch_size, 3, 3)
 
 
-def generate_synthetic_2D3Dpoints(R, C, A, points3D):
+def generate_synthetic_2D3Dpoints(R: Tensor, C: Tensor, A: Tensor, points3D: Tensor) -> Tensor:
     """
     Generate synthetic corresponding 2D and 3D points for P3P problem.
     Args:
@@ -44,29 +44,28 @@ def generate_synthetic_2D3Dpoints(R, C, A, points3D):
     Returns:
         points2D (torch.Tensor): Projected 2D points in image coordinates (batch_size,4,2).
     """
-    batch_size = R.shape[0]  # Get the batch size from the first dimension of R
+    batch_size: int = R.shape[0]  # Get the batch size from the first dimension of R
     points3D = torch.transpose(points3D, 1, 2)
-    print("points3D shape:", points3D)  # (batch_size, 3, 4   )
 
     # Compute camera translation vector from rotation R and position C
-    t = torch.matmul(-R, torch.reshape(C, (batch_size, 3, 1)))  # (batch_size, 3, 1)
+    t: Tensor = torch.matmul(-R, torch.reshape(C, (batch_size, 3, 1)))  # (batch_size, 3, 1)
 
     # Build projection matrix: P = A [R|t]
-    Rt = torch.cat([R, t], dim=2)  # (batch_size, 3, 4)
+    Rt: Tensor = torch.cat([R, t], dim=2)  # (batch_size, 3, 4)
 
-    P = torch.matmul(A, Rt)  # (batch_size, 3, 4)
+    P: Tensor = torch.matmul(A, Rt)  # (batch_size, 3, 4)
 
     # Convert 3D points to homogeneous coordinates (4x3)
-    points3D_h = torch.cat(
+    points3D_h: Tensor = torch.cat(
         [points3D, torch.ones(batch_size, 1, 4, dtype=torch.float64)], dim=1
     )  # (batch_size, 4, 4)
 
     # Project 3D points to 2D image plane using projection matrix
-    proj = torch.matmul(P, points3D_h)  # (batch_size, 3, 3)
+    proj: Tensor = torch.matmul(P, points3D_h)  # (batch_size, 3, 3)
 
     proj = proj / proj[:, 2, :]  # normalize homogeneous coordinates
 
     # Extract 2D image coordinates (3 points, shape 3x2)
-    points2D = proj[:, :2, :].transpose(1, 2)  # (batch_size, 3, 2)
+    points2D: Tensor = proj[:, :2, :].transpose(1, 2)  # (batch_size, 3, 2)
 
     return points2D
