@@ -61,11 +61,11 @@ def generate_synthetic_2D3Dpoints(R: Tensor, C: Tensor, A: Tensor, points3D: Ten
     )  # (batch_size, 4, 4)
 
     # Project 3D points to 2D image plane using projection matrix
-    proj: Tensor = torch.matmul(P, points3D_h)  # (batch_size, 3, 3)
+    proj: Tensor = torch.matmul(P, points3D_h)
 
     proj = proj / proj[:, 2, :]  # normalize homogeneous coordinates
 
-    # Extract 2D image coordinates (3 points, shape 3x2)
-    points2D: Tensor = proj[:, :2, :].transpose(1, 2)  # (batch_size, 3, 2)
+    # Extract 2D image coordinates (4 points, shape 4x2)
+    points2D: Tensor = proj[:, :2, :].transpose(1, 2)  # (batch_size, 4, 2)
 
     return points2D
